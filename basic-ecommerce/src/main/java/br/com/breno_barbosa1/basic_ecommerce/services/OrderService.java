@@ -57,7 +57,10 @@ public class OrderService {
 
         logger.info("Find user order by id!");
 
-        return parseObject(orderRepository.findById(id), OrderResponseDTO.class);
+        var entity = orderRepository.findOrderByIdWithDetails(id)
+            .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+        return orderToResponseDTO(entity);
     }
 
     @Transactional
