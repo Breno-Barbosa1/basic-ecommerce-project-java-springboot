@@ -1,0 +1,2 @@
+ALTER TABLE order_item
+ADD COLUMN product_id BIGINT NOT NULL;
