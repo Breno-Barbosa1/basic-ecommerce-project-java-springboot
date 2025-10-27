@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.breno_barbosa1.basic_ecommerce.mapper.ObjectMapper.parseListObjects;
-import static br.com.breno_barbosa1.basic_ecommerce.mapper.ObjectMapper.parseObject;
-
 @Service
 public class OrderService {
 

@@ -1,7 +1,6 @@
 package br.com.breno_barbosa1.basic_ecommerce.services;
 
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.ProductDTO;
-import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.UserDTO;
 import br.com.breno_barbosa1.basic_ecommerce.exceptions.RequiredObjectIsNullException;
 import br.com.breno_barbosa1.basic_ecommerce.exceptions.ResourceNotFoundException;
 import br.com.breno_barbosa1.basic_ecommerce.model.Product;
