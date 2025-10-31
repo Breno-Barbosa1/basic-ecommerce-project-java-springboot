@@ -1,12 +1,14 @@
 package br.com.breno_barbosa1.basic_ecommerce.data.dto.v1;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class OrderResponseDTO implements Serializable {
+public class OrderResponseDTO extends RepresentationModel<OrderResponseDTO>  implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,10 +1,12 @@
 package br.com.breno_barbosa1.basic_ecommerce.data.dto.v1;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UserDTO implements Serializable {
+public class UserDTO extends RepresentationModel<UserDTO> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

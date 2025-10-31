@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{id}")
-    public OrderResponseDTO findById(@PathVariable("id") Long id) {
+    public OrderResponseDTO findById(@PathVariable("id") Long id) throws Exception {
         return service.findById(id);
     }
 
