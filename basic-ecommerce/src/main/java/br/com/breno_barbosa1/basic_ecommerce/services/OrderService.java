@@ -1,5 +1,6 @@
 package br.com.breno_barbosa1.basic_ecommerce.services;
 
+import br.com.breno_barbosa1.basic_ecommerce.controllers.OrderController;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderItemRequestDTO;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderItemResponseDTO;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderRequestDTO;
@@ -24,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Service
 public class OrderService {
 
@@ -44,20 +48,30 @@ public class OrderService {
 
         List<Order> orders = orderRepository.findAllOrdersWithDetails();
 
+
         // entity to dto
         return orders.stream()
             .map(this::orderToResponseDTO)
+            .peek(dto -> {
+                try {
+                    addHateoasLinks(dto);
+                } catch (Exception e) {
+                    throw new RuntimeException("Error adding Hateoas links!");
+                }
+            })
             .collect(Collectors.toList());
     }
 
-    public OrderResponseDTO findById(Long id) {
+    public OrderResponseDTO findById(Long id) throws Exception {
 
         logger.info("Find user order by id!");
 
         var entity = orderRepository.findOrderByIdWithDetails(id)
             .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        return orderToResponseDTO(entity);
+        var dto = orderToResponseDTO(entity);
+        addHateoasLinks(dto);
+        return dto;
     }
 
     @Transactional
@@ -111,6 +125,7 @@ public class OrderService {
         dto.setCreatedDate(order.getCreatedDate());
         dto.setTotal(savedOrder.getTotal());
         dto.setItems(itemResponseDtoList);
+        addHateoasLinks(dto);
 
         return dto;
     }
@@ -195,5 +210,13 @@ public class OrderService {
             dtoList.add(itemDto);
         }
         return dtoList;
+    }
+
+
+    private void addHateoasLinks(OrderResponseDTO dto) throws Exception {
+        dto.add(linkTo(methodOn(OrderController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(OrderController.class).findAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(OrderController.class).findAll()).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(OrderController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 }

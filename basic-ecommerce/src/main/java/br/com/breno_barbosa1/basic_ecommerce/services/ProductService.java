@@ -1,5 +1,6 @@
 package br.com.breno_barbosa1.basic_ecommerce.services;
 
+import br.com.breno_barbosa1.basic_ecommerce.controllers.ProductController;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.ProductDTO;
 import br.com.breno_barbosa1.basic_ecommerce.exceptions.RequiredObjectIsNullException;
 import br.com.breno_barbosa1.basic_ecommerce.exceptions.ResourceNotFoundException;
@@ -15,6 +16,8 @@ import java.util.List;
 
 import static br.com.breno_barbosa1.basic_ecommerce.mapper.ObjectMapper.parseListObjects;
 import static br.com.breno_barbosa1.basic_ecommerce.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ProductService {
@@ -28,17 +31,20 @@ public class ProductService {
 
         logger.info("Finding all products!");
 
-        return parseListObjects(repository.findAll(), ProductDTO.class);
+        var products = parseListObjects(repository.findAll(), ProductDTO.class);
+        products.forEach(this::addHateoasLinks);
+        return products;
     }
 
     public ProductDTO findById(Long id) {
+        logger.info("Find by id!");
 
         var entity = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        logger.info("Find by id!");
-
-        return parseObject(entity, ProductDTO.class);
+        var dto = parseObject(entity, ProductDTO.class);
+        addHateoasLinks(dto);
+        return dto;
     }
 
     public ProductDTO create(ProductDTO product) {
@@ -49,7 +55,9 @@ public class ProductService {
 
         var entity = parseObject(product, Product.class);
 
-        return parseObject(repository.save(entity), ProductDTO.class);
+        var dto = parseObject(repository.save(entity), ProductDTO.class);
+        addHateoasLinks(dto);
+        return dto;
     }
 
     public ProductDTO update(@RequestBody ProductDTO product) {
@@ -66,7 +74,9 @@ public class ProductService {
         entity.setPrice(product.getPrice());
         entity.setStockQuantity(product.getStockQuantity());
 
-        return parseObject(repository.save(entity), ProductDTO.class);
+        var dto = parseObject(repository.save(entity), ProductDTO.class);
+        addHateoasLinks(dto);
+        return dto;
 
     }
 
@@ -78,5 +88,13 @@ public class ProductService {
             .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         repository.delete(entity);
+    }
+
+    private void addHateoasLinks(ProductDTO dto) {
+        dto.add(linkTo(methodOn(ProductController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(ProductController.class).findAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(ProductController.class).create(dto)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(ProductController.class).update(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(ProductController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 }

@@ -1,5 +1,7 @@
 package br.com.breno_barbosa1.basic_ecommerce.data.dto.v1;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;

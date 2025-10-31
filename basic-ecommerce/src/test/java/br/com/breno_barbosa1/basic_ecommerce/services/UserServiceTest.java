@@ -52,6 +52,7 @@ class UserServiceTest {
         assertNotNull(result.getId());
         assertNotNull(result.getEmail());
         assertNotNull(result.getAddress());
+        assertNotNull(result.getLinks());
 
         assertEquals("Email Test1", result.getEmail());
         assertEquals("Address Test1", result.getAddress());
@@ -73,6 +74,7 @@ class UserServiceTest {
         assertNotNull(result.getId());
         assertNotNull(result.getEmail());
         assertNotNull(result.getAddress());
+        assertNotNull(result.getLinks());
 
         assertEquals("Email Test1", result.getEmail());
         assertEquals("Address Test1", result.getAddress());
@@ -98,6 +100,7 @@ class UserServiceTest {
         assertNotNull(result.getId());
         assertNotNull(result.getEmail());
         assertNotNull(result.getAddress());
+        assertNotNull(result.getLinks());
 
         assertEquals("Email Test2", result.getEmail());
         assertEquals("Address Test2", result.getAddress());
@@ -136,11 +139,13 @@ class UserServiceTest {
         assertEquals(1, firstUser.getId());
         assertEquals("Email Test1", firstUser.getEmail());
         assertEquals("Address Test1", firstUser.getAddress());
+        assertNotNull(firstUser.getLinks());
 
         UserDTO fourthUser = dtoList.get(3);
 
         assertEquals(4, fourthUser.getId());
         assertEquals("Email Test4", fourthUser.getEmail());
         assertEquals("Address Test4", fourthUser.getAddress());
+        assertNotNull(fourthUser.getLinks());
     }
 }
