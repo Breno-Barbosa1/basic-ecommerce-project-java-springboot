@@ -149,6 +149,32 @@ class UserControllerXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(4)
+    void findByEmail() throws IOException {
+        var content = given(specification)
+            .accept(MediaType.APPLICATION_XML_VALUE)
+            .pathParam("email", user1.getEmail())
+            .when()
+            .get("email/{email}")
+            .then()
+            .statusCode(200)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .extract()
+            .body()
+            .asString();
+
+        List<UserDTO> foundUsers = objectMapper.readValue(content, new TypeReference<List<UserDTO>>() {});
+
+        assertNotNull(foundUsers);
+        assertFalse(foundUsers.isEmpty());
+
+        assertTrue(foundUsers.stream().anyMatch(user ->
+            user.getEmail().equals("john@gmail.com") &&
+            user.getAddress().equals("New Orleans - USA")
+        ), "could not find any match for john@gmail.com");
+    }
+
+    @Test
+    @Order(5)
     void findAll() throws JsonProcessingException {
         var content = given(specification)
             .accept(MediaType.APPLICATION_XML_VALUE)
@@ -178,7 +204,7 @@ class UserControllerXmlTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void delete() {
         given(specification)
             .contentType(MediaType.APPLICATION_XML_VALUE)

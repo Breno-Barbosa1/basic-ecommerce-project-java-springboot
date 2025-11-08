@@ -36,6 +36,14 @@ public class ProductService {
         return products;
     }
 
+    public List<ProductDTO> findByName(String name) {
+        logger.info("Find by name!");
+
+        var products = parseListObjects(repository.findByName(name), ProductDTO.class);
+        products.forEach(this::addHateoasLinks);
+        return products;
+    }
+
     public ProductDTO findById(Long id) {
         logger.info("Find by id!");
 

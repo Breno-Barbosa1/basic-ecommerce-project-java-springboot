@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,7 +30,6 @@ public class UserService {
     UserRepository repository;
 
     public List<UserDTO> findAll() {
-
         logger.info("Finding all users!");
 
         var users = parseListObjects(repository.findAll(), UserDTO.class);
@@ -42,14 +43,20 @@ public class UserService {
         var entity = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-
         var dto = parseObject(entity, UserDTO.class);
         addHateoasLinks(dto);
         return dto;
     }
 
-    public UserDTO create(UserDTO user) {
+    public List<UserDTO> findByEmail(String email) {
+        logger.info("Find by email!");
 
+        var users = parseListObjects(repository.findByEmail(email), UserDTO.class);
+        users.forEach(this::addHateoasLinks);
+        return users;
+    }
+
+    public UserDTO create(UserDTO user) {
         if (user == null) throw new RequiredObjectIsNullException();
 
         logger.info("Creating an user!");
@@ -62,7 +69,6 @@ public class UserService {
     }
 
     public UserDTO update(@RequestBody UserDTO user) {
-
         if (user == null) throw new RequiredObjectIsNullException();
 
         logger.info("Updating an user!");
@@ -79,7 +85,6 @@ public class UserService {
     }
 
     public void delete(Long id) {
-
         logger.info("Deleting one User!");
 
         User entity = repository.findById(id)

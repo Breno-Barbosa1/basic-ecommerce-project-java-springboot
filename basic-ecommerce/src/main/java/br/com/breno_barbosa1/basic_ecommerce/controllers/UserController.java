@@ -20,8 +20,8 @@ public class UserController implements UserControllerDocs {
     UserService service;
 
     @GetMapping(produces = {
-            MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_XML_VALUE
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_XML_VALUE
     }
     )
     @Override
@@ -29,11 +29,22 @@ public class UserController implements UserControllerDocs {
         return service.findAll();
     }
 
+    @GetMapping(value = "/email/{email}",
+        produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+        }
+    )
+    @Override
+    public List<UserDTO> findByEmail(@PathVariable("email") String email) {
+        return service.findByEmail(email);
+    }
+
     @GetMapping(value = "/{id}",
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
+        produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+        }
     )
     @Override
     public UserDTO findById(@PathVariable("id") Long id) {
@@ -41,14 +52,14 @@ public class UserController implements UserControllerDocs {
     }
 
     @PostMapping(
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            },
-            consumes = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
+        produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+        },
+        consumes = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+        }
     )
     @Override
     public UserDTO create(@RequestBody UserDTO user) {
@@ -56,14 +67,14 @@ public class UserController implements UserControllerDocs {
     }
 
     @PutMapping(value = "/{id}",
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            },
-            consumes = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE
-            }
+        produces = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+        },
+        consumes = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE
+        }
     )
     @Override
     public UserDTO update(@RequestBody UserDTO user) {
@@ -73,7 +84,6 @@ public class UserController implements UserControllerDocs {
     @DeleteMapping(value = "/{id}")
     @Override
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-
         service.delete(id);
 
         return ResponseEntity.noContent().build();
