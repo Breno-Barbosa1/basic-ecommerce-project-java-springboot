@@ -4,9 +4,10 @@ Basic ecommerce REST API built with Java and Spring Boot (Personal Study Project
 Technologies used:
 ✅ Spring Boot 3.5.6
 ✅ Java 17
-✅ JUnit5
+✅ Unit tests with JUnit
+✅ Integration Tests with Testcontainers
+✅ Swagger
 
-Technologies to implement later:
+Features to implement later:
 ☑️ JWT Authentication
-☑️ Swagger UI
-☑️ Integration Tests
+☑️ Basic Login and Sign in Page
