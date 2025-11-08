@@ -148,9 +148,9 @@ class UserControllerJsonTest extends AbstractIntegrationTest {
     void findByEmail() throws IOException {
         var content = given(specification)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .pathParam("email", user1.getEmail())
+            .queryParam("email", user1.getEmail())
             .when()
-            .get("email/{email}")
+            .get("search/byEmail")
             .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON_VALUE)

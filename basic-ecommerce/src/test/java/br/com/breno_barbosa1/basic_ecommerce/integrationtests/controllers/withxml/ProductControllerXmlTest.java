@@ -160,9 +160,9 @@ class ProductControllerXmlTest extends AbstractIntegrationTest {
     void findByName() throws IOException {
         var content = given(specification)
             .accept(MediaType.APPLICATION_XML_VALUE)
-            .pathParam("name", product1.getName())
+            .queryParam("name", product1.getName())
             .when()
-            .get("name/{name}")
+            .get("search/byName")
             .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_XML_VALUE)

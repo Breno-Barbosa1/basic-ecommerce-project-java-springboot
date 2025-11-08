@@ -39,7 +39,9 @@ public class ProductService {
     public List<ProductDTO> findByName(String name) {
         logger.info("Find by name!");
 
-        var products = parseListObjects(repository.findByName(name), ProductDTO.class);
+        String nameQuery = "%" + name + "%";
+
+        var products = parseListObjects(repository.findByName(nameQuery), ProductDTO.class);
         products.forEach(this::addHateoasLinks);
         return products;
     }
