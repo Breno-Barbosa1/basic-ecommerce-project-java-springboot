@@ -151,6 +151,34 @@ class ProductControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(4)
+    void findByName() throws IOException {
+        var content = given(specification)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .pathParam("name", product1.getName())
+            .when()
+            .get("name/{name}")
+            .then()
+            .statusCode(200)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .extract()
+            .body()
+            .asString();
+
+        List<ProductDTO> foundProducts = objectMapper.readValue(content, new TypeReference<List<ProductDTO>>() {});
+
+        assertNotNull(foundProducts);
+        assertFalse(foundProducts.isEmpty());
+
+        assertTrue(foundProducts.stream().anyMatch(product ->
+            product.getName().equals("Intel Pc") &&
+            product.getDescription().equals("AMD powered pc") &&
+            product.getPrice().equals(500.0) &&
+            product.getStockQuantity().equals(10)
+        ), "could not find any match for this product!");
+    }
+
+    @Test
+    @Order(5)
     void findAll() throws IOException {
         var content = given(specification)
             .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -184,7 +212,7 @@ class ProductControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void delete() {
         given(specification)
             .contentType(MediaType.APPLICATION_JSON_VALUE)

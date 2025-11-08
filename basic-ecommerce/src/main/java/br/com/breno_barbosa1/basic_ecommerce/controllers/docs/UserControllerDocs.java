@@ -36,6 +36,24 @@ public interface UserControllerDocs {
     )
     List<UserDTO> findAll();
 
+    @Operation(summary = "Find User by email",
+        description = "Finds a User by their email",
+        tags = "Users",
+        responses = {
+            @ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = @Content(schema = @Schema(implementation = UserDTO.class))
+            ),
+            @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+            @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+        }
+    )
+    List<UserDTO> findByEmail(@PathVariable("email") String email);
+
     @Operation(summary = "Find User by ID",
         description = "Finds a User by their ID",
         tags = "Users",
