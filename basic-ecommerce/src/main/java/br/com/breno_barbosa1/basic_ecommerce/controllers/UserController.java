@@ -29,14 +29,14 @@ public class UserController implements UserControllerDocs {
         return service.findAll();
     }
 
-    @GetMapping(value = "/email/{email}",
+    @GetMapping(value = "/search/byEmail",
         produces = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
         }
     )
     @Override
-    public List<UserDTO> findByEmail(@PathVariable("email") String email) {
+    public List<UserDTO> findByEmail(@RequestParam("email") String email) {
         return service.findByEmail(email);
     }
 

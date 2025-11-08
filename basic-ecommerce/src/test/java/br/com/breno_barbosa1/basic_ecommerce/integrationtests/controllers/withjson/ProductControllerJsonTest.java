@@ -154,9 +154,9 @@ class ProductControllerJsonTest extends AbstractIntegrationTest {
     void findByName() throws IOException {
         var content = given(specification)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .pathParam("name", product1.getName())
+            .queryParam("name", product1.getName())
             .when()
-            .get("name/{name}")
+            .get("search/byName")
             .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON_VALUE)

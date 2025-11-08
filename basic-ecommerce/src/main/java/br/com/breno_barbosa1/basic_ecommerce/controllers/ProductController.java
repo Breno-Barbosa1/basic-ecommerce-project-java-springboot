@@ -28,14 +28,14 @@ public class ProductController implements ProductControllerDocs {
         return service.findAll();
     }
 
-    @GetMapping(value = "/name/{name}",
+    @GetMapping(value = "/search/byName",
         produces = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
         }
     )
     @Override
-    public List<ProductDTO> findByName(@PathVariable("name") String name) {
+    public List<ProductDTO> findByName(@RequestParam("name") String name) {
         return service.findByName(name);
     }
 
