@@ -3,7 +3,7 @@ Basic ecommerce REST API built with Java and Spring Boot (Personal Study Project
 
 Technologies used:
 ✅ Spring Boot 3.5.6
-✅ Java 17
+✅ Java 21
 ✅ Unit tests with JUnit
 ✅ Integration Tests with Testcontainers
 ✅ Swagger
