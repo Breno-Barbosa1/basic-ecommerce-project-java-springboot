@@ -12,13 +12,13 @@ Hello! This is a personal study project that I started developing back in Septem
 * ✅ **JWT Authentication** (Roles, Tokens)
 * ✅ **React + TypeScript**
 * ✅ **Database migrations** with Flyway
-* ✅ **HATEOAS & DTOs**
+* ✅ **HATEOAS & DTO's**
 
 ### 🧠 Lessons Learned:
-* ☑️ **Spring Security:** I now have a grasp on JWT Tokens, Roles, Authentication, and Authorization. It proved to be a major challenge due to its complexity.
-* ☑️ **Frontend Integration:** Integration with React was the most time-consuming phase due to various bugs (Incorrect JSON, URL resource paths, CORS, etc.).
+* ☑️ **Spring Security:** I now have a bit of a grasp on JWT Tokens, Roles, Authentication, and Authorization. It proved to be a major challenge due to its complexity.
+* ☑️ **Frontend Integration:** Integration with React was the most time consuming phase due to various bugs (Incorrect JSON, URL resource paths, CORS, etc.).
 
-> **Note:** I used AI models for the CSS Styling to prioritize the actual project logic and backend code.
+> **Note:** I used AI models for the CSS Styling because i don't know CSS very well and i judged it would be too time consuming and i rather spend it with the actual project's code.
 
 ---
 
