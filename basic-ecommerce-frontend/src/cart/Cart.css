@@ -42,17 +42,17 @@
 .cart-items {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  width: 100%;
 }
 
 .cart-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 1fr 100px; 
   align-items: center;
-  padding: 16px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #e5e7eb;
-  gap: 20px;
+  gap: 16px;
+  text-align: left;
 }
 
 .nav-right {
@@ -83,6 +83,7 @@
 }
 
 .remove-item-btn {
-  background-color: #4F46E5;
-  color: white;
+  justify-self: end;
+  padding: 8px 16px;
+  width: fit-content;
 }
