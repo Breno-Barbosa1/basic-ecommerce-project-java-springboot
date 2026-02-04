@@ -1,0 +1,5 @@
+CREATE TABLE user_orders (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    created_date DATETIME DEFAULT (NOW()) NOT NULL,
+    total DOUBLE NOT NULL
+);
