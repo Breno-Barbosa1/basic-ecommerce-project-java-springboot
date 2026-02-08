@@ -6,6 +6,7 @@ import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderItemRequestDTO;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderItemResponseDTO;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderRequestDTO;
 import br.com.breno_barbosa1.basic_ecommerce.data.dto.v1.OrderResponseDTO;
+import br.com.breno_barbosa1.basic_ecommerce.exceptions.InsufficientStockQuantityException;
 import br.com.breno_barbosa1.basic_ecommerce.exceptions.RequiredObjectIsNullException;
 import br.com.breno_barbosa1.basic_ecommerce.exceptions.ResourceNotFoundException;
 import br.com.breno_barbosa1.basic_ecommerce.model.Order;
@@ -155,7 +156,7 @@ public class OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
             if (item.getQuantity() > product.getStockQuantity()) {
-                throw new Exception("Insufficient stock quantity for this product!");
+                throw new InsufficientStockQuantityException("Insufficient stock quantity for this product ID: " + item.getProductId());
             } else {
                 OrderItem orderItem = new OrderItem();
 
