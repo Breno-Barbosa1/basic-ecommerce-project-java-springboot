@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -39,20 +40,32 @@ public class JwtTokenFilter extends GenericFilterBean {
             return;
         }
 
-        String token = jwtTokenProvider.returnValidToken(req);
+        try {
+            String token = jwtTokenProvider.returnValidToken(req);
 
-        if (token != null && !token.isBlank()) {
+            if (token != null && !token.isBlank()) {
+                if (!jwtTokenProvider.validateToken(token)) {
+                    throw new InvalidJWTAuthenticationException("Invalid or expired token");
+                }
 
-            if (!jwtTokenProvider.validateToken(token)) {
-                throw new InvalidJWTAuthenticationException("Invalid or expired token");
+                var auth = jwtTokenProvider.getAuthentication(token);
+                if (auth != null) {
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
             }
+            filterChain.doFilter(request, response);
 
-            var auth = jwtTokenProvider.getAuthentication(token);
-            if (auth != null) {
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
+        } catch (InvalidJWTAuthenticationException e) {
+            showErrorResponse((HttpServletResponse) response, e.getMessage());
         }
+    }
 
-        filterChain.doFilter(request, response);
+    private void showErrorResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+
+        String json = String.format("{\"error\": \"Unauthorized\", \"message\": \"%s\"}", message);
+
+        response.getWriter().write(json);
     }
 }
