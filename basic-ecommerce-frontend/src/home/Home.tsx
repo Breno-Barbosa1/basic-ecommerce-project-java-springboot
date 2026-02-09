@@ -51,6 +51,8 @@ export default function Home() {
 
       const token = localStorage.getItem("token");
 
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
       if (token && isTokenValid(token)) {
         setLoggedIn(true);
       } else {
@@ -59,7 +61,7 @@ export default function Home() {
       }
 
       try {
-        const response = await fetch('http://localhost:8080/api/products', {
+        const response = await fetch(`${API_URL}/api/products`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

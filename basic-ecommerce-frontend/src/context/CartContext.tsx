@@ -38,6 +38,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
     }, [cart])
 
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
     const addToCart = useCallback(async (product: Product) => {
         const token = localStorage.getItem("token");
@@ -49,7 +50,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
         }
 
         try {
-          const response = await fetch(`http://localhost:8080/api/carts/update`, {
+          const response = await fetch(`${API_URL}/api/carts/update`, {
           method: "PUT",
           headers: {
             'Content-Type': 'application/json',
@@ -92,7 +93,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
       }
 
       try {
-        const response = await fetch(`http://localhost:8080/api/carts/${userEmail}`, {
+        const response = await fetch(`${API_URL}/api/carts/${userEmail}`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
         }
 
       try {
-          const response = await fetch(`http://localhost:8080/api/carts/remove/${userEmail}/${CartItemId}`, {
+          const response = await fetch(`${API_URL}/api/carts/remove/${userEmail}/${CartItemId}`, {
             method: "DELETE",
             headers: {
               'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
       if (token == null || userEmail == null) return;
 
       try {
-        const response = await fetch(`http://localhost:8080/api/carts/${userEmail}`, {
+        const response = await fetch(`${API_URL}/api/carts/${userEmail}`, {
             method: "DELETE",
             headers: {
               'Authorization': `Bearer ${token}`
@@ -176,7 +177,7 @@ export const CartProvider: React.FC<{children: React.ReactNode}> = ({children}) 
         }
 
       try {
-        const response = await fetch(`http://localhost:8080/api/carts/checkout/${userEmail}`, {
+        const response = await fetch(`${API_URL}/api/carts/checkout/${userEmail}`, {
           method: "POST",
           headers: {
             'Content-Type': 'application/json',
