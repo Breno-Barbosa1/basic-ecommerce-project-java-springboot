@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState} from 'react';
 
 export default function SignUp() {
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,7 +15,7 @@ export default function SignUp() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/auth/register', {
+            const response = await fetch(`${API_URL}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
