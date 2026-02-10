@@ -1,6 +1,8 @@
 # 🛒 Basic E-Commerce Project
 **Full-Stack RESTful API & Frontend: Spring Boot + React + TypeScript (Personal Study Project)**
 
+> **🚀 [View Live Demo on Render](https://basic-ecommerce-v47c.onrender.com)** > *Note: The live demo is hosted on a free instance; please allow up to a minute for the initial spin-up.*
+
 Hello! This is a personal study project that I started developing back in September 2025. It provided a massive learning experience for me on how Spring Boot and REST APIs work. I also learned about Spring Security and how to secure an API with authentication and authorization via JWT tokens. Furthermore, I learned how to integrate my backend with React + TypeScript using a MySQL database and how to test it with Integration tests and JUnit. So far, it's been a rewarding and challenging experience!
 
 ### 🛠 Technologies used:
@@ -30,7 +32,10 @@ Hello! This is a personal study project that I started developing back in Septem
 
 ---
 
-## 🚀 How to Run
+## 🚀 Local Development
+
+<details>
+<summary><b>Click to expand "How to Run" instructions</b></summary>
 
 ### Prerequisites
 * ✅ **Java 21** or higher
